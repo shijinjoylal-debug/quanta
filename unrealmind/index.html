@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EmerTezora</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: content-box;
+    }
+
+    body {
+      background-color: #bec5e4;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      color: #111010;
+      text-align: center;
+      overflow-x: hidden;
+      line-height: 1.6;
+      animation: bgShift 15s ease-in-out infinite alternate;
+      position: relative;
+    }
+
+    /* Floating particles */
+    .particles {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .particles span {
+      position: absolute;
+      display: block;
+      width: 10px;
+      height: 10px;
+      background: rgba(7, 57, 46, 0.4);
+      border-radius: 50%;
+      animation: float 12s linear infinite;
+    }
+
+    .particles span:nth-child(1) {
+      top: 20%;
+      left: 10%;
+      animation-duration: 12s;
+    }
+
+    .particles span:nth-child(2) {
+      top: 60%;
+      left: 80%;
+      animation-duration: 18s;
+    }
+
+    .particles span:nth-child(3) {
+      top: 40%;
+      left: 50%;
+      animation-duration: 15s;
+    }
+
+    .particles span:nth-child(4) {
+      top: 80%;
+      left: 20%;
+      animation-duration: 20s;
+    }
+
+    @keyframes float {
+
+      0%,
+      100% {
+        transform: translateY(0) scale(1);
+        opacity: 0.6;
+      }
+
+      50% {
+        transform: translateY(-60px) scale(1.3);
+        opacity: 1;
+      }
+    }
+
+    /* Orbit */
+    .orbit {
+      position: absolute;
+      top: 100px;
+      left: 50%;
+      width: 200px;
+      height: 200px;
+      margin-left: -100px;
+      border: 2px dashed rgba(9, 53, 44, 0.2);
+      border-radius: 50%;
+      animation: spin 12s linear infinite;
+      z-index: 1;
+    }
+
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
+      }
+
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+    /* Logo */
+    .logo-container {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      padding: 80px 20px 40px;
+      max-width: 700px;
+      margin: 0 auto;
+      animation: fadeInUp 1s ease-out;
+    }
+
+    .logo {
+      font-size: clamp(2rem, 8vw, 4rem);
+      font-weight: 700;
+      letter-spacing: 4px;
+      color: #0a2822;
+      text-transform: uppercase;
+      text-shadow: 0 0 20px #0a2822, 0 0 40px #00b5ff, 0 0 80px #7f00ff;
+      animation: glowPulse 2.5s ease-in-out infinite alternate;
+      transition: transform 0.3s ease;
+    }
+
+    .logo:hover {
+      transform: scale(1.05);
+    }
+
+    @keyframes glowPulse {
+      0% {
+        text-shadow: 0 0 15px #00ffc8, 0 0 30px #00b5ff;
+      }
+
+      100% {
+        text-shadow: 0 0 25px #00ffc8, 0 0 60px #7f00ff, 0 0 120px #ff008c;
+      }
+    }
+
+    .slogan {
+      margin-top: 15px;
+      font-size: clamp(0.9rem, 3vw, 1.2rem);
+      letter-spacing: 2px;
+      color: #0c0c0c;
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-block;
+      margin-top: 30px;
+      padding: 14px 32px;
+      font-size: clamp(1rem, 3vw, 1.2rem);
+      font-weight: bold;
+      color: #1f1e1e;
+      background: transparent;
+      border: 2px solid #00ffc8;
+      border-radius: 30px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: 0.3s ease;
+      box-shadow: 0 0 10px #00ffc8, inset 0 0 10px #00ffc8;
+      text-decoration: none;
+    }
+
+    .btn:hover {
+      background: #00ffc8;
+      color: #000;
+      transform: scale(1.05);
+    }
+
+
+    /* Extra Section */
+    .extra-section {
+      max-width: 800px;
+      margin: 30px auto 60px;
+      padding: 0 20px;
+      z-index: 2;
+      position: relative;
+    }
+
+    .extra-section h1 {
+      font-size: clamp(1.5rem, 5vw, 2.2rem);
+      font-weight: bold;
+      color: #1abc9c;
+      margin-bottom: 15px;
+      text-shadow: 0 0 10px rgba(0, 255, 200, 0.5);
+    }
+
+    .extra-section p {
+      font-size: 1.05rem;
+      line-height: 1.8;
+      color: #000000;
+      text-align: justify;
+    }
+
+    /* Popup */
+    .popup {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+
+    .popup-content {
+      background: #f8f9fa;
+      padding: 30px;
+      border-radius: 12px;
+      text-align: center;
+      width: 300px;
+      color: white;
+    }
+
+    .popup-content input {
+      width: 90%;
+      margin: 10px 0;
+      padding: 8px;
+      border: none;
+      border-radius: 6px;
+    }
+
+    .popup-content button {
+      width: 100%;
+      margin-top: 10px;
+      padding: 10px;
+    }
+
+    .close-btn {
+      background: #fdf8f8;
+    }
+  </style>
+
+
+</head>
+
+<body>
+
+  <div class="particles">
+    <span></span><span></span><span></span><span></span>
+  </div>
+
+  <div class="orbit"></div>
+
+  <div class="logo-container">
+    <div class="logo">EmerTezora</div>
+    <div class="slogan">Where Knowledge Meets Infinity</div>
+    <a class="btn" href="pages/bhome.html">Enter Site</a>
+    <a class="btn" href="search.html" style="margin-left: 20px;">Search</a>
+    <button class="btn" id="loginBtn" style="margin-left: 20px;">Login</button>
+  </div>
+  <!-- <div>
+<button class="btn" onclick="openSubscribe()">Subscribe</button>
+</div> -->
+
+  <div class="extra-section">
+    <h1>Welcome To EmerTezora</h1>
+    <h2> About Us</h2>
+    <p style="text-align:center">
+      <strong>This is a AI powered Quantum Mechanics Learning Platform.</strong><br>
+    </p>
+    <p>
+      We believe knowledge is limitless. Our mission is to create
+      a space where curiosity thrives, ideas grow, and learning never ends.
+      We provide a diverse range of resources — from articles and tutorials to
+      interactive lessons and community forums.
+    </p>
+    <h2>community</h2>
+    <p>
+      Connect with the world by joining our vibrant community of learners and
+      educators. Share your thoughts, ask meaningful questions and collaborate on projects. Together, let's explore new
+      frontiers of knowledge and innovation.</p>
+  </div>
+  </script>
+  <script src="js/voice-assistant.js" defer></script>
+  <!-- Login/Register Modal -->
+  <div id="authModal" class="popup">
+    <div class="popup-content" style="max-width: 350px;">
+      <h2 id="modalTitle" style="color:#0a2822; margin-bottom: 15px;">Login</h2>
+      <form id="authForm">
+        <input type="text" id="username" placeholder="Username" required
+          style="width: 100%; padding: 10px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 5px;">
+        <input type="password" id="password" placeholder="Password" required
+          style="width: 100%; padding: 10px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 5px;">
+        <button type="submit" class="btn"
+          style="width: 100%; margin-top: 10px; background: #00ffc8; color: #000;">Submit</button>
+      </form>
+      <p style="color: #333; margin-top: 15px; font-size: 0.9rem;">
+        <span id="toggleText">Don't have an account?</span>
+        <a href="#" id="toggleAuth" style="color: #00b5ff; text-decoration: none; font-weight: bold;">Register</a>
+      </p>
+      <button class="btn close-btn" id="closeModalBtn"
+        style="width: 100%; margin-top: 10px; background: #ddd; color: #333; border: none;">Close</button>
+    </div>
+  </div>
+
+  <script>
+    const loginBtn = document.getElementById('loginBtn');
+    const authModal = document.getElementById('authModal');
+    const closeModalBtn = document.getElementById('closeModalBtn');
+    const toggleAuth = document.getElementById('toggleAuth');
+    const modalTitle = document.getElementById('modalTitle');
+    const authForm = document.getElementById('authForm');
+    const toggleText = document.getElementById('toggleText');
+
+    // Determine API Base URL based on current hostname to ensure cookies work
+    const HOST = window.location.hostname === '127.0.0.1' ? '127.0.0.1' : 'localhost';
+    const API_BASE_URL = `http://${HOST}:5000`;
+
+    let isLogin = true;
+    let currentUser = null;
+
+    // Check if user is already logged in
+    async function checkSession() {
+      try {
+        const res = await fetch(`${API_BASE_URL}/api/auth/me`, {
+          credentials: 'include' // Important for sessions
+        });
+        if (res.ok) {
+          const user = await res.json();
+          currentUser = user;
+          updateUI(user);
+        } else {
+          console.log('Session check returned:', res.status, res.statusText);
+        }
+      } catch (err) {
+        console.log('Not logged in or API error', err);
+      }
+    }
+
+    // Update UI based on auth state
+    function updateUI(user) {
+      if (user) {
+        loginBtn.textContent = `Hello, ${user.username} (Logout)`;
+        // Remove old event listener and add logout logic
+        const newBtn = loginBtn.cloneNode(true);
+        loginBtn.parentNode.replaceChild(newBtn, loginBtn);
+
+        newBtn.addEventListener('click', async () => {
+          try {
+            await fetch(`${API_BASE_URL}/api/auth/logout`, { method: 'POST', credentials: 'include' });
+            window.location.reload();
+          } catch (err) {
+            console.error('Logout failed', err);
+          }
+        });
+
+        // Check for notifications
+        if (user.notifications && user.notifications.length > 0) {
+          user.notifications.forEach(note => {
+            if (!note.read) {
+              alert(`Notification: ${note.message}`);
+              // In a real app, you'd mark this as read via another API call
+            }
+          });
+        }
+      }
+    }
+
+    // Run session check on load
+    checkSession();
+
+    // Open Modal (only if not logged in)
+    // Note: We need to re-select loginBtn if it was replaced, but simpler to just attach to the initial one if not logged in.
+    // However, since we replace the button in updateUI, the original event listener is gone.
+    // If NOT logged in, we want the modal. If LOGGED in, we want logout.
+    // Logic handled in updateUI. If not logged in, original listener works.
+
+    loginBtn.addEventListener('click', () => {
+      if (!currentUser) {
+        authModal.style.display = 'flex';
+      }
+    });
+
+    // Close Modal
+    closeModalBtn.addEventListener('click', () => {
+      authModal.style.display = 'none';
+    });
+
+    // Toggle Login/Register
+    toggleAuth.addEventListener('click', (e) => {
+      e.preventDefault();
+      isLogin = !isLogin;
+      if (isLogin) {
+        modalTitle.innerText = 'Login';
+        toggleText.innerText = "Don't have an account?";
+        toggleAuth.innerText = 'Register';
+      } else {
+        modalTitle.innerText = 'Register';
+        toggleText.innerText = "Already have an account?";
+        toggleAuth.innerText = 'Login';
+      }
+    });
+
+    // Handle Form Submission
+    authForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+
+      const endpoint = isLogin ? '/api/auth/login' : '/api/auth/register';
+      const url = `${API_BASE_URL}${endpoint}`;
+
+      try {
+        const res = await fetch(url, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username, password }),
+          credentials: 'include' // Important for sessions
+        });
+        const data = await res.json();
+
+        if (res.ok) {
+          alert(data.message);
+          if (isLogin) {
+            currentUser = data.user;
+            authModal.style.display = 'none';
+            updateUI(currentUser);
+          } else {
+            // Switch to login after registration
+            isLogin = true;
+            modalTitle.innerText = 'Login';
+            toggleText.innerText = "Don't have an account?";
+            toggleAuth.innerText = 'Register';
+          }
+        } else {
+          alert(data.message);
+        }
+      } catch (err) {
+        console.error('Error:', err);
+        alert('Something went wrong. Check console for details.');
+      }
+    });
+  </script>
+</body>
+
+</html>

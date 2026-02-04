@@ -1,0 +1,618 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>EmerTezora — Quantum Superposition — Visual Guide & Interactive Learning</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Inter:wght@300;400;600&display=swap"
+    rel="stylesheet">
+
+  <style>
+    /* Navigation Bar */
+    nav {
+      width: 100%;
+      background-color: rgba(255, 255, 255, 0.05);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      backdrop-filter: blur(6px);
+      position: fixed;
+      top: 0;
+      left: 0;
+      padding: 12px 20px;
+      z-index: 1000;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 24px;
+      margin: 0;
+      padding: 0;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: var(--text);
+      font-weight: 600;
+      transition: color 0.3s;
+    }
+
+    nav a:hover,
+    nav a.active {
+      color: var(--glow);
+    }
+
+    /* Hamburger for Mobile */
+    .menu-toggle {
+      display: none;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 26px;
+      height: 20px;
+      cursor: pointer;
+    }
+
+    .menu-toggle span {
+      display: block;
+      height: 3px;
+      background: var(--text);
+      border-radius: 2px;
+      transition: all 0.3s ease;
+    }
+
+    /* ------------------------------
+   Mobile & Tablet Responsive Fixes
+   ------------------------------ */
+
+    /* Large tablets */
+    @media (max-width: 1024px) {
+      .wrap {
+        grid-template-columns: 1fr;
+        padding: 16px;
+      }
+    }
+
+    /* Normal tablets & larger phones */
+    @media (max-width: 820px) {
+      body {
+        font-size: 15px;
+      }
+
+      header .card {
+        padding: 18px;
+      }
+
+      h1 {
+        font-size: 22px;
+      }
+
+      .section h2 {
+        font-size: 17px;
+      }
+
+      .sidebar {
+        gap: 12px;
+      }
+
+      #blochCard {
+        margin-top: 10px;
+      }
+    }
+
+    /* Small phones — 360px to 480px */
+    @media (max-width: 480px) {
+
+      .wrap {
+        grid-template-columns: 1fr;
+        gap: 14px;
+        padding: 14px;
+      }
+
+      header .card {
+        text-align: center;
+        padding: 16px;
+      }
+
+      h1 {
+        font-size: 20px;
+        line-height: 1.3;
+      }
+
+      .main .card,
+      .sidebar .card {
+        padding: 14px;
+      }
+
+      /* Make demo canvas scale smoothly */
+      .demo {
+        height: 220px !important;
+      }
+
+      #waveCanvas {
+        width: 100% !important;
+        height: 100% !important;
+      }
+
+      /* Slider controls reshaped for phones */
+      .controls {
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      /* Bloch sphere mini animation */
+      #blochSphere {
+        width: 90px;
+        height: 90px;
+      }
+
+      /* Improve readability */
+      p,
+      .note,
+      li {
+        font-size: 13.5px;
+      }
+    }
+
+    /* Very small devices — 320px screens */
+    @media (max-width: 360px) {
+
+      body {
+        font-size: 14px;
+      }
+
+      h1 {
+        font-size: 18px;
+      }
+
+      .controls {
+        gap: 10px;
+      }
+
+      .section h2 {
+        font-size: 16px;
+      }
+
+      #blochSphere {
+        width: 80px;
+        height: 80px;
+      }
+
+      .demo {
+        height: 200px !important;
+      }
+    }
+
+    :root {
+      --bg1: #0a1b6c;
+      --bg2: #060b20;
+      --card: rgba(21, 35, 87, 0.75);
+      --accent: #7dd3fc;
+      --accent2: #a78bfa;
+      --text: #e6eef8;
+      --muted: #9fb6cf;
+      --glow: 0 0 20px rgba(125, 211, 252, 0.3);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', system-ui, sans-serif;
+      background: linear-gradient(180deg, var(--bg1), var(--bg2));
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+    }
+
+    /* --- Header Section --- */
+    header {
+      grid-column: 1 / -1;
+      text-align: center;
+      margin-bottom: 24px;
+      animation: fadeIn 1s ease forwards;
+    }
+
+    header .card {
+      background: linear-gradient(145deg, rgba(29, 41, 89, 0.85), rgba(11, 19, 43, 0.85));
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: var(--glow);
+      backdrop-filter: blur(12px);
+    }
+
+    h1 {
+      font-size: 26px;
+      margin: 10px 0 6px;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+    }
+
+    p.lead {
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    /* --- Layout --- */
+    .wrap {
+      max-width: 1150px;
+      margin: 28px auto;
+      padding: 20px;
+      display: grid;
+      grid-template-columns: 1fr 350px;
+      gap: 20px;
+    }
+
+    .main,
+    .sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    /* --- Cards --- */
+    .card {
+      background: var(--card);
+      padding: 18px;
+      border-radius: 14px;
+      box-shadow: 0 8px 30px rgba(2, 6, 23, 0.6);
+      backdrop-filter: blur(10px);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 0 25px rgba(125, 211, 252, 0.25);
+    }
+
+    /* --- Section Headers --- */
+    .section h2 {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--accent);
+      border-left: 3px solid var(--accent);
+      padding-left: 8px;
+      margin-bottom: 8px;
+    }
+
+    /* --- Paragraphs & Notes --- */
+    .section p {
+      font-size: 14px;
+      line-height: 1.6;
+      color: #eaf3ff;
+    }
+
+    .note {
+      background: rgba(125, 211, 252, 0.08);
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-size: 13px;
+      color: var(--muted);
+      margin-top: 8px;
+    }
+
+    /* --- Demo Canvas --- */
+    .demo {
+      height: 300px;
+      border-radius: 10px;
+      background: radial-gradient(circle at top, rgba(125, 211, 252, 0.12), rgba(2, 6, 23, 0.6));
+      overflow: hidden;
+      animation: fadeIn 1s ease forwards;
+    }
+
+    .controls {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 12px;
+    }
+
+    label {
+      font-size: 13px;
+      color: var(--accent);
+      font-weight: 500;
+    }
+
+    input[type=range] {
+      width: 100%;
+      accent-color: var(--accent2);
+      cursor: pointer;
+    }
+
+    /* --- Sidebar Cards --- */
+    .sidebar h3 {
+      font-size: 16px;
+      margin-bottom: 6px;
+      color: var(--accent);
+    }
+
+    ul.muted {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    /* --- Bloch Card Glow --- */
+    #blochCard {
+      cursor: pointer;
+      animation: pulseCardGlow 3s infinite ease-in-out;
+    }
+
+    @keyframes pulseCardGlow {
+
+      0%,
+      100% {
+        box-shadow: 0 0 20px rgba(125, 211, 252, 0.25);
+      }
+
+      50% {
+        box-shadow: 0 0 35px rgba(125, 211, 252, 0.5);
+      }
+    }
+
+    #blochCard:hover {
+      transform: translateY(-4px) scale(1.02);
+    }
+
+    /* --- Animations --- */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width:980px) {
+      .wrap {
+        grid-template-columns: 1fr;
+      }
+
+      header .card {
+        text-align: left;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Navigation -->
+  <nav>
+    <div class="menu-toggle" onclick="toggleMenu()">
+      <span></span><span></span>
+    </div>
+    <ul id="navMenu">
+      <li><a class="active" href="test2.html">Home</a></li>
+      <li><a href="econnection.html">Community</a></li>
+    </ul>
+  </nav>
+  <div class="wrap">
+    <header>
+      <div class="card">
+        <svg width="50" height="50" viewBox="0 0 64 64" fill="none">
+          <circle cx="32" cy="32" r="30" stroke="#7dd3fc" stroke-opacity="0.25" stroke-width="2" />
+          <path d="M10 42c8-10 18-12 26-6" stroke="#7dd3fc" stroke-width="2" stroke-linecap="round" />
+        </svg>
+        <h1>Quantum Superposition — Learn Visually</h1>
+        <p class="lead">Interactive animations and clear explanations to help you visualize superposition, interference,
+          and the behavior of qubits.</p>
+      </div>
+    </header>
+
+    <main class="main">
+      <div class="card section">
+        <h2>Understanding Superposition</h2>
+        <p>Imagine tossing a coin. Before you look, is it heads or tails? Quantum mechanics says — it’s <strong>both at
+            once</strong>! This is the concept of <strong>superposition</strong> — a particle exist in multiple states
+          simultaneously until it’s measured. It is described by wave function. This principle means that particles do
+          not have definite properties until observed. Upon measurement the superposition collapses in to a single
+          state.</p>
+      </div>
+
+      <div class="card section">
+        <h2>How Waves Combine</h2>
+        <p>Light, sound, and even quantum particles act like waves. When two waves meet, they can either <strong>add
+            up</strong> (constructive interference) or <strong>cancel out</strong> (destructive interference). there are
+          two amplitude crest and trough where crest is the highest point and trough is the lowest point. When opposite
+          amplitude meet they cause destructive interference, which results in the waves cancelling each other out and
+          if the amplitudes are equal they cause constructive interference it cause the waves overlap consistently.</p>
+        <a href="superposition.html" class="btn"><span>learn more with interactive animation</span></a>
+        <style>
+          /*superposition btn*/
+          .btn {
+            display: inline-block;
+            margin-top: 12px;
+            padding: 10px 18px;
+            border-radius: 30px;
+            background: rgba(14, 2, 53, 0.05);
+            box-shadow: 0 0 10px rgba(125, 211, 252, 0.5);
+            color: var(--text);
+            font-weight: 600;
+            font-size: 13px;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+          }
+
+          .btn:hover,
+          .btn:active {
+            background: rgba(197, 200, 212, 0.1);
+            box-shadow: 0 0 25px rgba(125, 211, 252, 0.8), 0 0 35px rgba(125, 211, 252, 0.6);
+            transform: scale(1.05);
+          }
+        </style>
+
+        <div class="demo"><canvas id="waveCanvas"></canvas></div>
+
+        <div class="controls">
+          <div style="flex:1">
+            <label>Left wave amplitude: <span id="a1Label">0.7</span></label>
+            <input id="a1" type="range" min="0" max="1" step="0.01" value="0.7">
+          </div>
+          <div style="flex:1">
+            <label>Right wave amplitude: <span id="a2Label">0.7</span></label>
+            <input id="a2" type="range" min="0" max="1" step="0.01" value="0.7">
+          </div>
+          <div style="width:160px">
+            <label>Phase difference: <span id="phiLabel">0.00</span></label>
+            <input id="phi" type="range" min="0" max="6.283" step="0.01" value="0">
+          </div>
+        </div>
+        <p class="note">Move the sliders to see interference — the same phenomenon behind the double-slit experiment!
+        </p>
+      </div>
+
+      <div class="card section">
+        <h2>Why It Matters</h2>
+        <p>Superposition powers <strong>quantum computing</strong>. Each <em>qubit</em> can represent both 0 and 1 at
+          the same time, giving these computers incredible speed and power.</p>
+        <div class="note">💡 Think of a spinning coin — not heads, not tails, but both — until you catch it.</div>
+      </div>
+
+      <div class="card section">
+        <h2>Felix Bloach</h2>
+        <p>Felix Bloch helped visualize superposition with the <strong>Bloch Sphere. </strong>The bloch sphere is a
+          geometrical model that visually represents the quantum state of a single quibit as a point on the surface of a
+          unit sphere. A quibit (quantum bit) is the basic unit of quantum information. Click on the rigth side Bloch
+          sphere animation to explore more!</p>
+      </div>
+    </main>
+
+    <aside class="sidebar">
+      <div class="card">
+        <h3>Quick Facts</h3>
+        <ul class="muted">
+          <li><strong>Wavefunction (ψ):</strong> Describes a particle’s full state.</li>
+          <li><strong>Probability:</strong> We see |ψ|² — the chance of finding it.</li>
+          <li><strong>Interference:</strong> Overlapping waves amplify or cancel.</li>
+          <li><strong>Collapse:</strong> Observation picks one outcome.</li>
+          <li><strong>Coherence:</strong> The connection that keeps interference alive.</li>
+        </ul>
+      </div>
+
+      <div class="card" id="blochCard">
+        <h3>Mini Animation — Bloch Sphere</h3>
+        <div style="display:flex;justify-content:center;align-items:center;height:120px;">
+          <svg id="blochSphere" viewBox="0 0 120 120" width="120" height="120">
+            <defs>
+              <linearGradient id="g" x1="0" x2="1">
+                <stop offset="0" stop-color="#7dd3fc" stop-opacity="0.8" />
+                <stop offset="1" stop-color="#60a5fa" stop-opacity="0.6" />
+              </linearGradient>
+            </defs>
+            <circle cx="60" cy="60" r="44" fill="#071028" stroke="#7dd3fc" stroke-opacity="0.08" />
+            <g id="blochArrow">
+              <line x1="60" y1="60" x2="60" y2="20" stroke="url(#g)" stroke-width="3" stroke-linecap="round" />
+              <polygon points="60,12 56,22 64,22" fill="#7dd3fc" opacity="0.95" />
+            </g>
+          </svg>
+        </div>
+        <p class="muted">🌀 Every point on the Bloch Sphere represents a possible qubit state — a blend of 0 and 1, like
+          a direction on a globe.</p>
+      </div>
+
+      <div class="card">
+        <h3>Explore More</h3>
+        <ul class="muted">
+          <li>See how interference forms in the <strong>Double-Slit Experiment</strong>.</li>
+          <li>Understand qubit rotations on the <strong>Bloch Sphere</strong>.</li>
+          <li>Discover how measurement changes a system’s reality.</li>
+        </ul>
+      </div>
+    </aside>
+  </div>
+
+  <script>
+    // keeps your original animation and navigation intact
+    document.addEventListener('DOMContentLoaded', () => {
+      const canvas = document.getElementById('waveCanvas');
+      const ctx = canvas.getContext('2d');
+      function resizeCanvas() {
+        const rect = canvas.getBoundingClientRect();
+        const dpr = window.devicePixelRatio || 1;
+        canvas.width = rect.width * dpr;
+        canvas.height = rect.height * dpr;
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      }
+      window.addEventListener('resize', resizeCanvas);
+      resizeCanvas();
+
+      const a1 = document.getElementById('a1'), a2 = document.getElementById('a2'), phi = document.getElementById('phi');
+      const a1Label = document.getElementById('a1Label'), a2Label = document.getElementById('a2Label'), phiLabel = document.getElementById('phiLabel');
+
+      a1.oninput = () => { a1Label.textContent = a1.value; draw(); };
+      a2.oninput = () => { a2Label.textContent = a2.value; draw(); };
+      phi.oninput = () => { phiLabel.textContent = Number(phi.value).toFixed(2); draw(); };
+
+      function draw() {
+        const W = canvas.clientWidth, H = canvas.clientHeight;
+        ctx.clearRect(0, 0, W, H);
+        const midY = H * 0.5, n = 600;
+        const A1 = +a1.value, A2 = +a2.value, PH = +phi.value;
+        const freq = 2.2, density = [];
+        for (let i = 0; i < n; i++) {
+          const x = i / (n - 1);
+          const w1 = A1 * Math.sin(2 * Math.PI * freq * x);
+          const w2 = A2 * Math.sin(2 * Math.PI * freq * x + PH);
+          density[i] = (w1 + w2) * (w1 + w2);
+        }
+        let maxD = Math.max(...density) || 1;
+        ctx.beginPath();
+        for (let i = 0; i < n; i++) {
+          const x = i / (n - 1), xpos = x * W;
+          const ypos = midY - Math.sqrt(density[i] / maxD) * (H * 0.22);
+          i ? ctx.lineTo(xpos, ypos) : ctx.moveTo(xpos, ypos);
+        }
+        const g = ctx.createLinearGradient(0, 0, 0, H);
+        g.addColorStop(0, 'rgba(125,211,252,0.3)');
+        g.addColorStop(1, 'rgba(125,211,252,0.05)');
+        ctx.fillStyle = g; ctx.fill();
+
+        ctx.strokeStyle = 'rgba(125,211,252,0.9)';
+        ctx.lineWidth = 2; ctx.beginPath();
+        for (let i = 0; i < n; i++) { const x = i / (n - 1), xpos = x * W, y = midY - A1 * Math.sin(2 * Math.PI * freq * x) * (H * 0.18); i ? ctx.lineTo(xpos, y) : ctx.moveTo(xpos, y); }
+        ctx.stroke();
+
+        ctx.setLineDash([6, 4]);
+        ctx.strokeStyle = 'rgba(96,165,250,0.8)';
+        ctx.beginPath();
+        for (let i = 0; i < n; i++) { const x = i / (n - 1), xpos = x * W, y = midY - A2 * Math.sin(2 * Math.PI * freq * x + PH) * (H * 0.18); i ? ctx.lineTo(xpos, y) : ctx.moveTo(xpos, y); }
+        ctx.stroke(); ctx.setLineDash([]);
+      }
+      draw();
+
+      const blochCard = document.getElementById('blochCard');
+      if (blochCard) { blochCard.onclick = () => window.location.assign('test3.html'); }
+
+      const blochSphere = document.getElementById('blochSphere');
+      const blochArrow = document.getElementById('blochArrow');
+      if (blochSphere && blochArrow) {
+        let angle = 0, dir = 1;
+        function animate() {
+          angle += dir * 0.8;
+          if (angle > 45 || angle < -45) dir *= -1;
+          blochArrow.setAttribute('transform', `rotate(${angle} 60 60)`);
+          requestAnimationFrame(animate);
+        }
+        animate();
+      }
+    });
+  </script>
+  <script src="../js/voice-assistant.js" defer></script>
+</body>
+
+</html>

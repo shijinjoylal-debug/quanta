@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search - EmerTezora</title>
+    <link rel="stylesheet" href="css/search.css">
+
+    <!-- Scripts -->
+    <script src="js/search_data.js" defer></script>
+    <script src="js/search.js" defer></script>
+    <script src="js/learning_client.js" defer></script>
+</head>
+
+<body>
+
+    <!-- Structure -->
+    <header class="search-header">
+        <h1 class="search-title">Search EmerTezora</h1>
+        <a href="index.html" class="home-link">← Back to Home</a>
+    </header>
+
+    <!-- Tabs -->
+    <div class="search-tabs">
+        <button class="search-tab active" id="tab-standard">Standard Search</button>
+        <button class="search-tab" id="tab-ai">AI Context (Beta)</button>
+        <button class="search-tab" id="tab-quantum">Quantum Learning</button>
+    </div>
+
+    <!-- Standard Search Container -->
+    <div id="standard-search-view">
+        <div class="search-container">
+            <input type="text" id="searchInput" placeholder="Type to search modules, formulas, or topics...">
+        </div>
+        <div id="resultsContainer">
+            <p style="opacity: 0.6;">Start typing to explore...</p>
+        </div>
+    </div>
+
+    <!-- AI Search Container (Hidden by default) -->
+    <div id="ai-search-view" style="display: none;">
+        <div class="search-container">
+            <input type="text" id="aiInput"
+                placeholder="Ask questions about quantum mechanics within the project (e.g. 'What is superposition?')...">
+        </div>
+        <div id="aiResultsContainer" style="width: 100%; max-width: 800px; margin: 0 auto;">
+            <!-- AI Results here -->
+            <p style="opacity: 0.6;">Ask anything. The AI has learned from the project files.</p>
+        </div>
+        <button id="ingestBtn" class="ingest-btn" title="Refresh AI Knowledge">↻ Re-learn Data</button>
+    </div>
+
+    <!-- Quantum Learning View -->
+    <div id="quantum-view" style="display: none;">
+        <div class="search-container" style="display:flex; gap:10px; margin-bottom:20px;">
+            <input type="url" id="externalUrlInput" placeholder="Enter external URL (e.g., Wikipedia)..."
+                style="flex:1; padding:10px; border-radius:30px; border:none; outline:none; font-size:1rem; padding-left:20px;">
+            <button id="addResourceBtn" class="ingest-btn" style="margin:0; width:auto; padding:0 20px;">+ Add
+                Resource</button>
+        </div>
+
+        <div class="search-container">
+            <input type="text" id="quantumInput" placeholder="Ask about Quantum Mechanics (External Knowledge)...">
+        </div>
+
+        <div id="quantumResultsContainer" style="width: 100%; max-width: 800px; margin: 0 auto;">
+            <p style="opacity: 0.6;">Learn purely from external resources.</p>
+        </div>
+    </div>
+
+</body>
+
+</html>

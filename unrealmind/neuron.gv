@@ -1,0 +1,13 @@
+digraph {
+	x1 [label=input1]
+	x2 [label=input2]
+	h1 [label=hidden1]
+	h2 [label=hidden2]
+	y [label=output]
+	x1 -> h1
+	x1 -> h2
+	x2 -> h1
+	x2 -> h2
+	h1 -> y
+	h2 -> y
+}

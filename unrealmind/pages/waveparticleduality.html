@@ -1,0 +1,380 @@
+<html>
+
+<head>
+  <title>young's double slit</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>EmerTezora — Quantum Superposition — Wave Particle Duality</title>
+</head>
+
+<body>
+  <style>
+    /* --- Professional Academic Layout --- */
+    body {
+      margin: 0;
+      font-family: 'Inter', 'Segoe UI', Roboto, sans-serif;
+      background: #132a4c;
+      color: #ffffff;
+      min-height: 100vh;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* Faint academic grid overlay - behind content but above background */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: transparent;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Background Animation Canvas */
+    #dualityCanvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 1;
+      /* Above body background/grid, below content */
+      pointer-events: none;
+      /* Let clicks pass through */
+      /* Make background transparent so body gradient shows */
+      background: transparent;
+    }
+
+    /* Floating Labels for Animation */
+    .anim-caption-fixed {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 10;
+      font-family: 'Inter', sans-serif;
+      background: transparent;
+      padding: 10px 20px;
+      display: flex;
+      gap: 20px;
+      font-size: 0.9rem;
+      color: #94a3b8;
+    }
+
+    #label-particle,
+    #label-wave {
+      transition: color 0.3s, text-shadow 0.3s;
+    }
+
+    .separator {
+      color: #334155;
+    }
+
+    /* Main academic card container */
+    .academic-wrap {
+      max-width: 1150px;
+      margin: 20px auto;
+      padding: 20px;
+      position: relative;
+      z-index: 5;
+      /* Ensure content is above animation */
+      /* Glassmorphism for readability */
+    }
+
+    /* Ensure all main content is readable */
+    main {
+      position: relative;
+      z-index: 5;
+    }
+
+    .card {
+      /* Transparent background request */
+      background: transparent;
+      padding: 40px;
+      max-width: 1000px;
+      margin: 0 auto 100px auto;
+    }
+
+    @media (max-width: 768px) {
+      .academic-wrap {
+        padding: 15px;
+        margin: 10px;
+      }
+
+      .card {
+        /* Update card media query logic if needed */
+        padding: 20px;
+      }
+    }
+
+    h1 {
+      font-size: clamp(1.4rem, 2.5vw, 1.8rem);
+    }
+
+    p {
+      font-size: clamp(0.9rem, 2vw, 1rem);
+      line-height: 1.6;
+      /* margin-left/right already handled by card padding essentially, but keeping original tweaks if desired */
+      margin-left: 0;
+      margin-right: 0;
+      margin-bottom: 20px;
+    }
+
+
+    /* Academic header style */
+    header {
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding-bottom: 12px;
+      margin-bottom: 40px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      position: relative;
+      z-index: 5;
+      justify-content: center;
+      /* Center header */
+    }
+
+    h1 {
+      font-weight: 700;
+      font-size: 1.8rem;
+      letter-spacing: 0.5px;
+      margin: 0;
+    }
+
+    /* Subtle academic accent ring behind ψ logo */
+    .psi-badge {
+      width: 600px;
+      height: 150px;
+      border-radius: 14px;
+      background: radial-gradient(circle at top left, #60a5fa, #0ea5a9);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 1.5rem;
+      color: #012;
+      position: relative;
+      box-shadow: 0 0 20px rgba(125, 211, 252, 0.3);
+      /* margin-left removed for centering */
+    }
+
+    /* Footer academic tone */
+    footer {
+      text-align: center;
+      color: #8e99a8;
+      font-size: 0.85rem;
+      margin-top: 40px;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      padding-top: 12px;
+      position: relative;
+      z-index: 5;
+      padding-bottom: 80px;
+      /* Space for fixed caption */
+    }
+  </style>
+
+  <!-- Canvas Background -->
+  <canvas id="dualityCanvas"></canvas>
+
+  <!-- Fixed Caption -->
+  <div class="anim-caption-fixed">
+    <span id="label-particle"></span>
+    <span class="separator"></span>
+    <span id="label-wave"></span>
+  </div>
+
+  <header>
+    <div class="psi-badge">Wave-Particle Duality</div>
+  </header>
+  <main>
+    <div class="card">
+      <h1>De Broglie</h1>
+      <p>Particles like electrons have a wave associated with them. The wavelength with an electron of momentum p
+        will be<br>
+        λ = 2πh/p. This wave will produce the same interference pattern when you do it with electrons as you did
+        with light. In Newtonian mechanics electron either goes through slit 1 or slit 2. Imagine that in a given
+        time there is only one electron. It cannot collide with itself, and yet it knows two slits are open.
+        So it has such a wave associated with it, and it can go through both slits, and giving the interference
+        pattern. That's the peculiarity of particles; electron also behaves like a particle or a wave. An electron
+        can't go through one particular slit. Imagine putting a light source behind the slit, and you see that
+        electron you catch goes through one slit, and electron which cannot be detected goes through both the
+        slits, and forming interference pattern. Whenever it's not observed it seems to be able to somehow be
+        aware of two slits. We know that light is made of quanta, and each quanta carries a certain energy, and
+        certain momentum. If I want to locate the electron with some waves with some light, I want the momentum of
+        light to be weak, because I don't want to slam the electron too hard in the act of finding it. So I want
+        p to be very small. If p is very small λ which is proportional to 1/p becomes large, and once λ is bigger than
+        the spacing
+        between the slits, the picture you get will be so fuzzy, you cannot tell which slit it went through. To
+        make a fine observation in the optics you need a wavelength smaller than the distances you're trying to
+        resolve, so you got to use a wavelength smaller than these slits. So p should be such that λ is comparable
+        to this slit or even smaller, and then you find the act of observing an electron imparts to it an unknown
+        amount of momentum. Once you change the momentum you change the interference. So the act of observing
+        which is pretty innocuous for macroscopic things (right now all of us are getting slammed by millions of
+        photons,) but for the electron it is not that simple (one collision with the photon is like getting hit by a
+        truck.) The momentum of photon is enormous in the scale of electron. So it matters a lot to the
+        electron. In Newtonian mechanics there is no limit to observe somebody without noticing we can make it
+        gentle by just make the light dimmer, and dimmer. But in quantum mechanics it is not how dim the light is
+        if the light is too dim we can't find the electron cause there are too few photons. In order to detect
+        electron you've got to send enough photons, but the point is each photon carries certain energy, and
+        momentum which is minimum it cannot be smaller than λ=2πh/p which will cause disturbance to the electron
+        collapsing its wavefunction.
+      </p>
+    </div>
+  </main>
+
+  <script>
+    (function () {
+      const canvas = document.getElementById('dualityCanvas');
+      const ctx = canvas.getContext('2d');
+      let width, height;
+      let time = 0;
+
+      function resize() {
+        width = canvas.width = window.innerWidth;
+        height = canvas.height = window.innerHeight;
+      }
+      window.addEventListener('resize', resize);
+      // Call resize immediately
+      resize();
+
+      class QuantumEntity {
+        constructor() {
+          this.reset();
+        }
+
+        reset() {
+          this.x = -50;
+          this.y = height / 2;
+          // Start as particle
+          this.state = 'particle';
+          this.speed = 3; // Slightly faster for full screen
+        }
+
+        update() {
+          // Keep y centered even if resized
+          this.y = height / 2;
+
+          this.x += this.speed;
+
+          // Loop animation
+          if (this.x > width + 50) {
+            this.reset();
+          }
+
+          // Calculate duality factor based on position
+          // 0 = Particle (Left/Right edges)
+          // 1 = Wave (Center)
+          const center = width / 2;
+          const dist = Math.abs(this.x - center);
+          // Scale range based on screen width
+          const range = width / 2.2;
+
+          let factor = 1 - (dist / range);
+          if (factor < 0) factor = 0;
+
+          // Ease the factor
+          this.dualityFactor = Math.pow(factor, 1.5);
+
+          // Update UI labels
+          const pLabel = document.getElementById('label-particle');
+          const wLabel = document.getElementById('label-wave');
+
+          if (this.dualityFactor > 0.6) {
+            wLabel.style.color = '#7dd3fc';
+            wLabel.style.textShadow = '0 0 10px rgba(125, 211, 252, 0.5)';
+            pLabel.style.color = '#475569';
+            pLabel.style.textShadow = 'none';
+          } else {
+            pLabel.style.color = '#7dd3fc';
+            pLabel.style.textShadow = '0 0 10px rgba(125, 211, 252, 0.5)';
+            wLabel.style.color = '#475569';
+            wLabel.style.textShadow = 'none';
+          }
+        }
+
+        draw(ctx) {
+
+          // Visual parameters
+          const waveAmplitude = 50 * this.dualityFactor; // Larger amplitude for full screen
+          const particleSize = 8 * (1 - this.dualityFactor * 0.5);
+          const glowSize = 25 * (1 - this.dualityFactor * 0.8) + (waveAmplitude);
+
+          // Draw Wave Packet
+          if (this.dualityFactor > 0.01) {
+            ctx.beginPath();
+            ctx.strokeStyle = `rgba(56, 189, 248, ${0.4 + this.dualityFactor * 0.6})`;
+            ctx.lineWidth = 3;
+
+            const packetWidth = 100 + (this.dualityFactor * 300); // Wider packet
+
+            for (let i = -packetWidth; i <= packetWidth; i += 4) { // Step 4 for perf
+              const dx = i;
+              const screenX = this.x + dx;
+
+              // Gaussian Envelope
+              const sigma = 40 + (this.dualityFactor * 80);
+              const envelope = Math.exp(-(dx * dx) / (2 * sigma * sigma));
+
+              // Traveling Wave
+              const k = 0.2;
+              const omega = 0.2;
+              const waveOscillation = Math.cos(k * dx - time * omega);
+
+              const yOffset = envelope * waveOscillation * 60 * this.dualityFactor; // Higher vertical scale
+
+              if (i === -packetWidth) ctx.moveTo(screenX, this.y + yOffset);
+              else ctx.lineTo(screenX, this.y + yOffset);
+            }
+            ctx.stroke();
+          }
+
+          // Draw Particle Core (always exists but fades/spreads)
+          const coreAlpha = 1 - (this.dualityFactor * 0.9);
+          if (coreAlpha > 0.05) {
+            ctx.beginPath();
+            const g = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, particleSize * 4);
+            g.addColorStop(0, `rgba(255, 255, 255, ${coreAlpha})`);
+            g.addColorStop(0.3, `rgba(14, 165, 233, ${coreAlpha * 0.6})`);
+            g.addColorStop(1, 'rgba(0,0,0,0)');
+            ctx.fillStyle = g;
+            ctx.arc(this.x, this.y, particleSize * 4, 0, Math.PI * 2);
+            ctx.fill();
+
+            ctx.beginPath();
+            ctx.fillStyle = `rgba(255,255,255,${coreAlpha})`;
+            ctx.arc(this.x, this.y, particleSize * 0.6, 0, Math.PI * 2);
+            ctx.fill();
+          }
+        }
+      }
+
+      const entity = new QuantumEntity();
+
+      function animate() {
+        ctx.clearRect(0, 0, width, height);
+
+        // Optional: faint grid lines only if desired, but we have CSS grid.
+        // Let's draw the center line (axis of travel) lightly
+        ctx.beginPath();
+        ctx.moveTo(0, height / 2); ctx.lineTo(width, height / 2);
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.05)';
+        ctx.setLineDash([10, 20]);
+        ctx.stroke();
+        ctx.setLineDash([]);
+
+        time++;
+        entity.update();
+        entity.draw(ctx);
+
+        requestAnimationFrame(animate);
+      }
+
+      // Start
+      animate();
+    })();
+  </script>
+  <script src="../js/voice-assistant.js" defer></script>
+</body>
+
+</html>

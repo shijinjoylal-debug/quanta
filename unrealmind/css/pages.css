@@ -1,0 +1,81 @@
+:root {
+    --bg1: #071427;
+    --bg2: #0a2a50;
+    --glow: #7fd1ff;
+    --stroke: #bfe9ff;
+    --dot: #ffffff;
+    --text: #ffffff;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: radial-gradient(1200px 800px at 65% 35%, var(--bg2), var(--bg1) 60%);
+    font-family: "Inter", "Poppins", system-ui, -apple-system, Roboto, Arial, sans-serif;
+    color: var(--text);
+    overflow-x: hidden;
+}
+
+nav {
+    width: 100%;
+    background-color: transparent;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding: 12px 20px;
+    z-index: 1000;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 24px;
+    margin: 0;
+    padding: 0;
+}
+
+nav a {
+    text-decoration: none;
+    color: var(--text);
+    font-weight: 600;
+    transition: color 0.3s;
+}
+
+nav a:hover,
+nav a.active {
+    color: var(--glow);
+}
+
+/* Hamburger for Mobile */
+.menu-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 26px;
+    height: 20px;
+    cursor: pointer;
+}
+
+.menu-toggle span {
+    display: block;
+    height: 3px;
+    background: var(--text);
+    border-radius: 2px;
+    transition: all 0.3s ease;
+}
+
+button {
+    background-color: var(--glow);
+    color: var(--text);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}

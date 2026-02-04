@@ -1,0 +1,38 @@
+:root {
+  --bg1: #071427;
+  --bg2: #0a2a50;
+  --glow: #7fd1ff;
+  --stroke: #bfe9ff;
+  --dot: #ffffff;
+  --text: #ffffff;
+  --glass: rgba(255, 255, 255, 0.05);
+  --glass-hover: rgba(197, 200, 212, 0.1);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: radial-gradient(1200px 800px at 65% 35%, var(--bg2), var(--bg1) 60%);
+  font-family: "Inter", "Poppins", system-ui, -apple-system, Roboto, Arial, sans-serif;
+  color: var(--text);
+  overflow-x: hidden;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg1);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--bg2);
+  border-radius: 4px;
+}

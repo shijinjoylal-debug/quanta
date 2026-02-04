@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>EmerTezora-quantum entanglement</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+  <nav>
+    <div class="menu-toggle" onclick="toggleMenu()">
+      <span></span><span></span>
+    </div>
+    <ul id="navMenu">
+      <li><a class="active" href="test5 5.html">Home</a></li>
+      <li><a href="econnection.html">Community</a></li>
+    </ul>
+  </nav>
+
+  <style>
+    nav {
+      width: 100%;
+      background-color: transparent;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: fixed;
+      top: 0;
+      left: 0;
+      padding: 12px 20px;
+      z-index: 1000;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 24px;
+      margin: 0;
+      padding: 0;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: var(--text);
+      font-weight: 600;
+      transition: color 0.3s;
+    }
+
+    nav a:hover,
+    nav a.active {
+      color: var(--glow);
+    }
+
+    /* Hamburger for Mobile */
+    .menu-toggle {
+      display: none;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 26px;
+      height: 20px;
+      cursor: pointer;
+    }
+
+    .menu-toggle span {
+      display: block;
+      height: 3px;
+      background: var(--text);
+      border-radius: 2px;
+      transition: all 0.3s ease;
+    }
+
+    /* --- Professional Academic Layout --- */
+    body {
+      margin: 0;
+      font-family: 'Inter', 'Segoe UI', Roboto, sans-serif;
+      background: radial-gradient(circle at 30% 20%, #0b1528 0%, #07111f 70%);
+      color: #e6eef6;
+      min-height: 100vh;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* Faint academic grid overlay */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background-image: linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Main academic card container */
+    .academic-wrap {
+      max-width: 1150px;
+      margin: 20px auto;
+      padding: 20px;
+    }
+
+    @media (max-width: 768px) {
+      .academic-wrap {
+        padding: 15px;
+        margin: 10px;
+      }
+    }
+
+    h1 {
+      font-size: clamp(1.4rem, 2.5vw, 1.8rem);
+    }
+
+    p {
+      font-size: clamp(0.9rem, 2vw, 1rem);
+      line-height: 1.6;
+    }
+
+
+    /* Academic header style */
+    header {
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding-bottom: 12px;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    header h1 {
+      font-weight: 700;
+      font-size: 1.8rem;
+      letter-spacing: 0.5px;
+      margin: 0;
+    }
+
+    header p {
+      margin: 0;
+      color: #9aa4b2;
+      font-size: 0.95rem;
+    }
+
+    /* Subtle academic accent ring behind ψ logo */
+    .psi-badge {
+      width: 60px;
+      height: 60px;
+      border-radius: 14px;
+      background: radial-gradient(circle at top left, #60a5fa, #0ea5a9);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 1.5rem;
+      color: #012;
+      position: relative;
+      box-shadow: 0 0 20px rgba(125, 211, 252, 0.3);
+    }
+
+    /* Footer academic tone */
+    footer {
+      text-align: center;
+      color: #8e99a8;
+      font-size: 0.85rem;
+      margin-top: 40px;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      padding-top: 12px;
+    }
+  </style>
+
+  <div class="academic-wrap">
+    <header>
+      <div class="psi-badge">ψ</div>
+      <div>
+        <h1>Quantum Entanglement — Explained</h1>
+        <p>Complete Explanation About Quantum Entanglement
+          Know all about Quantum Entanglement in detail.
+        </p>
+      </div>
+    </header>
+
+    <!-- Your existing grid, cards, and interactive content go here -->
+    <main class="grid">
+      <h1 style="text-align: center;" font-family=inria serif-regular>NOT SPOOKY ACTION AT A DISTANCE</h1>
+      <p>Quantum mechanics sometimes looks like an assorted mix of weird stuff There's wave-particle duality,
+        superposition, the uncertainity priciple and there is entanglement. Albert Einstiens famously described this as
+        "spooky action at a distance" , when doing something to one of a pair of entangled particles to instantly affect
+        the properties of the other no matter how far away it is.Now,the truth is that none of these descriptions ar not
+        quite right They're all really just efforts to use our everyday language to describe something that is
+        fundamentally different from our everyday experience. That's especially true of entanglement, which is not a
+        spooky action at all.</p>
+      <h1 style="text-align: center;" font-family=inria serif-regular>ENTANGLED PARTICLES</h1>
+      <p>Entanglement is a special connection that can exist between two particles in order to understand it, let's
+        reffer
+        an example which we use just to understand the concept of entanglement.Lets imagine a pair of shoes, one left
+        and
+        one right. We put each shoe in a box and send one box to bob who is in New York and the other to Alice who is in
+        London. Neither of them knows which shoe they have until they open their box. When Alice opens her box and sees
+        a
+        left shoe, she instantly knows that Bob has the right shoe, even though he is far away. This is similar to how
+        entangled particles work. When we measure one particle, we instantly know the state of the other particle, no
+        matter how far apart they are.</p>
+      <h1 style="text-align:center; font-family:'Inria Serif', serif;">EPR</h1>
+      <p>In 1935, Albert Einstein, Boris Podolsky, and Nathan Rosen published a paper that challenged the completeness
+        of
+        quantum mechanics. They proposed a thought experiment, now known as the EPR paradox, to illustrate their
+        concerns.
+        The EPR paradox involves two particles that are entangled in such a way that measuring the state of one particle
+        not only determines its own state but forces the other particle into opposite state instantaneously, regardless
+        of
+        the distance between them. Einstein referred to this phenomenon as "spooky action at a distance," expressing his
+        discomfort with the idea that information could be transmitted faster than the speed of light. Because of this
+        EPR
+        responded that whole idea of properties of quantum objects remaining undetermined until one measures them,didn't
+        make sense. They figured that there must be something-what einstien called hidden variables-that predetermined
+        the
+        results of measurements and fixes the orientation of the spins all along, even if we couldn't see those
+        variables
+        directly they must exist according to EPR.</p>
+      <h1 style="text-align:center; font-family:'Inria Serif', serif;">NIELS BOHR'S RESPONSE</h1>
+      <p>Niels Bohr said there is no hidden variables and that quantum mechanics is complete. He argued that the EPR
+        paradox arises from a misunderstanding of the view of quantum mechanics. Bohr emphasized the importance of the
+        measurement process and the role of the observer in determining the properties of quantum systems. According to
+        Bohr, the act of measurement itself affects the system being measured, and therefore, it is not meaningful to
+        talk
+        about the properties of a quantum system independently of the measurement context.</p>
+      <h1 style="text-align:center; font-family:'Inria Serif', serif;">JOHN STEWART BELL</h1>
+      <p>In 1964, Irish physicist John Stewart Bell figure out how to set up a clever experiment to determine who was
+        right. It involved running the experiment again and again on pairs of entangled particles.</p>
+      <h1 style="text-align:center; font-family:'Inria Serif', serif;">BELL'S INEQUALITY</h1>
+      <P>He conducted an experiment to test the correlations between the measurements of entangled particles. He runs
+        the
+        experiment again and again on pairs of entangled particles. According to Bell's theorem, if local hidden
+        variables
+        were responsible for the correlations observed in entangled particles, then the results of the measurements
+        would
+        satisfy certain statistical inequalities, known as Bell's inequalities. However, if quantum mechanics is correct
+        and there are no hidden variables, then the results would violate these inequalities. Bell proved stronger
+        statistical correlations in the outcomes of these measurements than any hidden variable theory possibly could.
+      </P>
+      <div>
+        <image src="../assets/images/Screenshot (33).png" style="width:40%; height:50%;"></image>
+      </div>
+      <h1 style="text-align:center; font-family:'Inria Serif', serif;">NO EVIDENCE FOR HIDDEN VARIABLES</h1>
+      <p>When Bell's experiment was first done in a lab in the 1970s by physicist John Clauser and Stuart Freedman at
+        the
+        university of California Berkeley, it shows there was no sign of hidden variables, and that indeed, outcomes are
+        determined only by the act of measurement. Since then, many more sophisticated versions of Bell's experiment
+        have
+        been performed, all confirming the same result: there is no evidence for hidden variables, and quantum mechanics
+        accurately describes the behavior of entangled particles.</p>
+      <h1 style="text-align:center; font-family:'Inria Serif', serif;">HOW TO ENTANGLE TWO QUANTUM OBJECTS</h1>
+      <p>The simmplest way to entangle two quantum objects is to create them together in a single event that conserves
+        certain properties, such as energy, momentum, and angular momentum. For example, when a particle decays into two
+        smaller particles, the resulting particles can be entangled. Another way to entangle particles is through
+        interactions, such as when two particles collide or interact with each other in a specific way. Additionally,
+        certain processes in quantum optics, such as spontaneous parametric down-conversion, can generate entangled
+        photon
+        pairs.</p>
+      <!-- (Insert all your <section> and <aside> content here) -->
+    </main>
+    <a href="test6.html">
+      <button class="btn">
+        <span>ENTANGLEMENT EXPLAINED WITH ANIMATION</span>
+      </button>
+    </a>
+    <style>
+      .btn {
+        display: block;
+        margin: 20px auto;
+        width: fit-content;
+        border: none;
+        border-radius: 20px;
+        padding: 12px 24px;
+        font-size: 1rem;
+        background-color: black;
+        color: white;
+        transition: background 0.3s;
+      }
+
+      .btn:hover,
+      .btn:active {
+        background-color: #111;
+      }
+    </style>
+    <footer>
+      © 2025 Quantum Learning Initiative — Educational Simulation inspired by Bell & Aspect experiments.
+    </footer>
+  </div>
+  <script src="../js/voice-assistant.js" defer></script>
+</body>
+
+</html>

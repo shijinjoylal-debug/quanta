@@ -1,0 +1,427 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>EmerTezora</title>
+
+  <style>
+    :root {
+      --glass: rgba(255, 255, 255, 0.06);
+      --accent: #0b76ef;
+      --maxw: 900px;
+      --text-light: #e6eef8;
+      --muted: #9fbefc;
+    }
+
+    * {
+      box-sizing: border-box;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: linear-gradient(180deg, #0f1724, #071028);
+      color: var(--text-light);
+      padding: 80px 24px 24px;
+    }
+
+    /* NAVBAR */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 16px;
+      background: rgba(255, 255, 255, 0.03);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+      z-index: 999;
+    }
+
+    .nav-brand {
+      font-size: 20px;
+      font-weight: 700;
+    }
+
+    .menu-btn {
+      display: none;
+      font-size: 26px;
+      background: none;
+      border: 0;
+      color: white;
+      cursor: pointer;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 18px;
+      padding: 0;
+      margin: 0;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: var(--text-light);
+      font-weight: 500;
+    }
+
+    @media(max-width:700px) {
+      .menu-btn {
+        display: block;
+      }
+
+      nav {
+        display: none;
+        position: absolute;
+        top: 60px;
+        right: 14px;
+        background: #0f1724;
+        padding: 12px;
+        border-radius: 10px;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+      }
+
+      nav.open {
+        display: block;
+      }
+
+      nav ul {
+        flex-direction: column;
+      }
+    }
+
+    /* CONTENT CARD */
+    .card {
+      max-width: var(--maxw);
+      margin: auto;
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 14px;
+      padding: 20px;
+      box-shadow: 0 8px 30px rgba(2, 6, 23, 0.4);
+    }
+
+    form {
+      display: grid;
+      gap: 12px;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 120px;
+      padding: 12px;
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      background: transparent;
+      color: white;
+    }
+
+    .filebox {
+      border: 1px dashed rgba(255, 255, 255, 0.1);
+      padding: 16px;
+      border-radius: 10px;
+      text-align: center;
+    }
+
+    .thumbs {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .thumb {
+      width: 70px;
+      height: 70px;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    button {
+      padding: 10px 14px;
+      border: 0;
+      background: var(--accent);
+      color: white;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    button.secondary {
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    /* POSTS */
+    .posts {
+      margin-top: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .post {
+      padding: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 12px;
+    }
+
+    .post-images {
+      margin-top: 12px;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+      gap: 10px;
+    }
+
+    .post-images img {
+      width: 100%;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    /* LIGHTBOX */
+    #lightbox {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.85);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      visibility: hidden;
+      opacity: 0;
+      transition: .3s;
+      z-index: 9999;
+    }
+
+    #lightbox.active {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    #lightbox img {
+      max-width: 90%;
+      max-height: 90%;
+      border-radius: 10px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- NAVBAR -->
+  <header class="navbar">
+    <div class="nav-brand">EmerTezora</div>
+    <button class="menu-btn" id="menuBtn">&#9776;</button>
+  </header>
+
+  <!-- PAGE -->
+  <main class="card">
+    <h1>Share Your Thoughts ✨</h1>
+
+    <form id="postForm">
+      <textarea id="text" placeholder="Write something..." required></textarea>
+
+      <div class="filebox" id="dropZone">
+        <p>Drag & drop images or <button type="button" class="secondary" id="browseBtn">Browse</button></p>
+        <input type="file" id="images" accept="image/*" multiple hidden>
+      </div>
+
+      <div class="thumbs" id="thumbs"></div>
+
+      <div style="display:flex;gap:10px;">
+        <button type="submit">Post</button>
+        <button type="button" id="clearBtn" class="secondary">Clear</button>
+      </div>
+    </form>
+
+    <h2 style="margin-top:24px;">Community Posts</h2>
+    <section id="posts" class="posts"></section>
+  </main>
+
+  <!-- LIGHTBOX -->
+  <div id="lightbox">
+    <img id="lightboxImg">
+  </div>
+
+  <script>
+    /* MOBILE MENU */
+    document.getElementById("menuBtn").onclick = () => {
+      document.getElementById("navMenu").classList.toggle("open");
+    };
+
+    /* FRONTEND LOGIC */
+    const API_POSTS = "http://localhost:5000/api/posts";
+
+    let selectedFiles = [];
+
+    const imagesInput = document.getElementById("images");
+    const thumbs = document.getElementById("thumbs");
+    const dropZone = document.getElementById("dropZone");
+
+    /*** LOAD POSTS ON START ***/
+    loadPosts();
+
+    /*** FILE SELECT ***/
+    document.getElementById("browseBtn").onclick = () => imagesInput.click();
+
+    imagesInput.onchange = () => handleFiles([...imagesInput.files]);
+
+    dropZone.addEventListener("dragover", e => {
+      e.preventDefault();
+      dropZone.style.borderColor = "#0b76ef";
+    });
+    dropZone.addEventListener("dragleave", () =>
+      dropZone.style.borderColor = "rgba(255,255,255,0.1)"
+    );
+
+    dropZone.addEventListener("drop", e => {
+      e.preventDefault();
+      handleFiles([...e.dataTransfer.files]);
+    });
+
+    /*** HANDLE FILES ***/
+    function handleFiles(files) {
+      selectedFiles = files.slice(0, 4);
+      thumbs.innerHTML = "";
+
+      selectedFiles.forEach(file => {
+        const reader = new FileReader();
+        reader.onload = e => {
+          const div = document.createElement("div");
+          div.className = "thumb";
+          div.innerHTML = `<img src="${e.target.result}">`;
+          thumbs.appendChild(div);
+        };
+        reader.readAsDataURL(file);
+      });
+    }
+
+    /*** CLEAR FORM ***/
+    document.getElementById("clearBtn").onclick = () => {
+      selectedFiles = [];
+      thumbs.innerHTML = "";
+      imagesInput.value = "";
+      document.getElementById("text").value = "";
+    };
+
+    /*** SUBMIT POST ***/
+    document.getElementById("postForm").onsubmit = async e => {
+      e.preventDefault();
+      const text = document.getElementById("text").value.trim();
+      if (!text) return alert("Write something!");
+
+      const fd = new FormData();
+      fd.append("text", text);
+
+      if (selectedFiles.length) {
+        selectedFiles.forEach(f => fd.append("images", f));
+      }
+
+      try {
+        const res = await fetch(API_POSTS, {
+          method: "POST",
+          body: fd
+        });
+
+        if (!res.ok) throw new Error("Failed to post");
+
+        const data = await res.json();
+        showPost(data);
+
+        document.getElementById("postForm").reset();
+        thumbs.innerHTML = "";
+        selectedFiles = [];
+        // Clear file input value to allow selecting same file again
+        imagesInput.value = "";
+      } catch (err) {
+        console.error(err);
+        alert("Error creating post");
+      }
+    };
+
+    /*** LOAD POSTS ***/
+    async function loadPosts() {
+      try {
+        const res = await fetch(API_POSTS);
+        const all = await res.json();
+        all.forEach(showPost);
+      } catch (err) {
+        console.error("Error loading posts:", err);
+      }
+    }
+
+    /*** DISPLAY POST ***/
+    function showPost(post) {
+      const div = document.createElement("div");
+      div.className = "post";
+
+      let imgs = "";
+      if (post.images?.length) {
+        imgs = `
+      <div class="post-images">
+        ${post.images
+            .map(imagePath => {
+              // Ensure we handle both full URLs (if changed in future) and relative paths
+              const src = imagePath.startsWith('http') ? imagePath : `http://localhost:5000${imagePath}`;
+              return `<img src="${src}" onclick="openLightbox(this.src)">`;
+            })
+            .join("")}
+      </div>
+    `;
+      }
+
+      div.innerHTML = `
+    <p>${post.text}</p>
+    ${imgs}
+    <time style="font-size:12px;opacity:0.6;">${new Date(post.createdAt).toLocaleString()}</time>
+    <br>
+    <button class="secondary" style="margin-top:6px;color:#ff6b6b;border-color:#ff6b6b" 
+      onclick="deletePost('${post._id}', this)">Delete</button>
+  `;
+
+      document.getElementById("posts").prepend(div);
+    }
+
+    /*** DELETE POST ***/
+    async function deletePost(id, btn) {
+      if (!confirm("Delete this post?")) return;
+
+      try {
+        const res = await fetch(`${API_POSTS}/${id}`, { method: "DELETE" });
+        if (res.ok) {
+          btn.parentElement.remove();
+        } else {
+          alert("Failed to delete");
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    /*** LIGHTBOX VIEWER ***/
+    function openLightbox(src) {
+      document.getElementById("lightboxImg").src = src;
+      document.getElementById("lightbox").classList.add("active");
+    }
+
+    document.getElementById("lightbox").onclick = () =>
+      document.getElementById("lightbox").classList.remove("active");
+  </script>
+</body>
+
+</html>

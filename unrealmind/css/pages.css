@@ -82,11 +82,15 @@ button {
 }
 
 img {
-    max-width: 100%;
+    max-width: 75%;
     height: auto;
     margin-left: 20%;
-    margin-right: 50%;
-    display: block;
+    margin-right: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 25%;
+    height: auto;
 }
 
 p {

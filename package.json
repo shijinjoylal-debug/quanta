@@ -2,7 +2,7 @@
   "name": "unrealmind",
   "version": "1.0.0",
   "description": "",
-  "main": "test.js",
+  "main": "index.html",
   "dependencies": {
     "accepts": "^2.0.0",
     "append-field": "^1.0.0",
@@ -91,13 +91,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ShirinJoylal/unrealmind.git"
+    "url": "git+https://github.com/shijinjoylal-debug/quanta.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/ShirinJoylal/unrealmind/issues"
+    "url": "https://github.com/Shijinjiylal-debug/quanta/issues"
   },
-  "homepage": "https://github.com/ShirinJoylal/unrealmind#readme"
+  "homepage": "https://github.com/Shijinjiylal-debug/quanta#readme"
 }

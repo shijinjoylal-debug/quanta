@@ -2,7 +2,8 @@
   "name": "unrealmind",
   "version": "1.0.0",
   "description": "",
-  "main": "index.html",
+  "main": "server.js",
+  "start": "node server.js",
   "dependencies": {
     "accepts": "^2.0.0",
     "append-field": "^1.0.0",

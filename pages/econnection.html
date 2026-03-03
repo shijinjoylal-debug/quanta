@@ -377,7 +377,7 @@
         ${post.images
             .map(imagePath => {
               // Ensure we handle both full URLs (if changed in future) and relative paths
-              const src = imagePath.startsWith('http') ? imagePath : `https://quanta-khaki.vercel.app/${imagePath}`;
+              const src = imagePath.startsWith('http') ? imagePath : `/${imagePath}`;
               return `<img src="${src}" onclick="openLightbox(this.src)">`;
             })
             .join("")}

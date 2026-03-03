@@ -314,9 +314,9 @@
     const authForm = document.getElementById('authForm');
     const toggleText = document.getElementById('toggleText');
 
-    // Determine API Base URL based on current hostname to ensure cookies work
-    const HOST = window.location.hostname === '127.0.0.1' ? '127.0.0.1' : 'localhost';
-    const API_BASE_URL = `http://${HOST}:5000`;
+    // Determine API Base URL based on current hostname
+    const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+    const API_BASE_URL = isLocal ? 'http://localhost:5000' : '';
 
     let isLogin = true;
     let currentUser = null;

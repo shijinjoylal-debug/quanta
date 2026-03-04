@@ -258,6 +258,7 @@
     <img id="lightboxImg">
   </div>
 
+  <script src="../js/config.js"></script>
   <script>
     /* MOBILE MENU */
     document.getElementById("menuBtn").onclick = () => {
@@ -265,7 +266,7 @@
     };
 
     /* FRONTEND LOGIC */
-    const API_POSTS = "/api/posts";
+    const API_POSTS = (window.CONFIG ? window.CONFIG.API_BASE_URL : '') + "/api/posts";
 
     let selectedFiles = [];
 

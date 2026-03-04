@@ -283,6 +283,7 @@
       frontiers of knowledge and innovation.</p>
   </div>
   </script>
+  <script src="js/config.js"></script>
   <script src="js/voice-assistant.js" defer></script>
   <!-- Login/Register Modal -->
   <div id="authModal" class="popup">
@@ -314,9 +315,8 @@
     const authForm = document.getElementById('authForm');
     const toggleText = document.getElementById('toggleText');
 
-    // Determine API Base URL based on current hostname
-    const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
-    const API_BASE_URL = isLocal ? 'http://localhost:5000' : '';
+    // Use centralized API Base URL
+    const API_BASE_URL = window.CONFIG ? window.CONFIG.API_BASE_URL : '';
 
     let isLogin = true;
     let currentUser = null;

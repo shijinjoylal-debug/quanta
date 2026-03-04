@@ -207,6 +207,7 @@
         <div id="result"></div>
     </div>
 
+    <script src="../js/config.js"></script>
     <script>
         async function generate() {
             const promptInput = document.getElementById('prompt');
@@ -224,8 +225,10 @@
             resultDiv.style.display = 'none';
             generateBtn.disabled = true;
 
+            const API_BASE_URL = window.CONFIG ? window.CONFIG.API_BASE_URL : 'http://localhost:5001';
+
             try {
-                const response = await fetch('http://localhost:5001/generate', {
+                const response = await fetch(`${API_BASE_URL}/generate`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ content: content })

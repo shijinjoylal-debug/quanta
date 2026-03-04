@@ -1,4 +1,4 @@
-const API_URL = '/api/posts'; // Vite proxy handles redirection to localhost:5000
+const API_URL = 'https://quanta-backend-raeq.onrender.com/api/posts';
 
 let selectedFiles = [];
 

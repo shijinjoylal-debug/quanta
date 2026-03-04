@@ -16,8 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const addResourceBtn = document.getElementById('addResourceBtn');
     const quantumResultsContainer = document.getElementById('quantumResultsContainer');
 
-    const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
-    const API_BASE = isLocal ? 'http://localhost:5000/api/learning' : '/api/learning';
+    const API_BASE = (window.CONFIG ? window.CONFIG.API_BASE_URL : '') + '/api/learning';
 
     // Tab Switching
     function switchTab(tabName) {

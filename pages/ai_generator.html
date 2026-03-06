@@ -228,10 +228,10 @@
             const API_BASE_URL = window.CONFIG.API_BASE_URL;
 
             try {
-                const response = await fetch(`${API_BASE_URL}/generate`, {
+                const response = await fetch(`${API_BASE_URL}/api/gemini/chat`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ content: content })
+                    body: JSON.stringify({ prompt: content })
                 });
 
                 const data = await response.json();

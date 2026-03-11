@@ -81,7 +81,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Quantum Search Logic
     quantumInput.addEventListener('keypress', (e) => {
         if (e.key === 'Enter') {
-            handleGeminiChat(quantumInput, quantumResultsContainer);
+            performSearch(quantumInput.value.trim(), 'quantum', quantumResultsContainer);
         }
     });
 

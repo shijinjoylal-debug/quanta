@@ -323,6 +323,12 @@
 
     // Check if user is already logged in
     async function checkSession() {
+      const cachedUser = localStorage.getItem('user');
+      if (cachedUser) {
+        currentUser = JSON.parse(cachedUser);
+        updateUI(currentUser);
+      }
+
       try {
         const res = await fetch(`${API_BASE_URL}/api/auth/me`, {
           credentials: 'include' // Important for sessions
@@ -330,8 +336,14 @@
         if (res.ok) {
           const user = await res.json();
           currentUser = user;
+          localStorage.setItem('user', JSON.stringify(user));
           updateUI(user);
         } else {
+          localStorage.removeItem('user');
+          if (currentUser) {
+            currentUser = null;
+            updateUI(null);
+          }
           console.log('Session check returned:', res.status, res.statusText);
         }
       } catch (err) {
@@ -341,15 +353,18 @@
 
     // Update UI based on auth state
     function updateUI(user) {
+      const currentLoginBtn = document.getElementById('loginBtn');
       if (user) {
-        loginBtn.textContent = `Hello, ${user.username} (Logout)`;
+        currentLoginBtn.textContent = `Hello, ${user.username} (Logout)`;
         // Remove old event listener and add logout logic
-        const newBtn = loginBtn.cloneNode(true);
-        loginBtn.parentNode.replaceChild(newBtn, loginBtn);
+        const newBtn = currentLoginBtn.cloneNode(true);
+        newBtn.id = 'loginBtn';
+        currentLoginBtn.parentNode.replaceChild(newBtn, currentLoginBtn);
 
         newBtn.addEventListener('click', async () => {
           try {
             await fetch(`${API_BASE_URL}/api/auth/logout`, { method: 'POST', credentials: 'include' });
+            localStorage.removeItem('user');
             window.location.reload();
           } catch (err) {
             console.error('Logout failed', err);
@@ -365,6 +380,16 @@
             }
           });
         }
+      } else {
+        currentLoginBtn.textContent = 'Login';
+        const newBtn = currentLoginBtn.cloneNode(true);
+        newBtn.id = 'loginBtn';
+        currentLoginBtn.parentNode.replaceChild(newBtn, currentLoginBtn);
+        newBtn.addEventListener('click', () => {
+          if (!currentUser) {
+            authModal.style.display = 'flex';
+          }
+        });
       }
     }
 
@@ -377,7 +402,9 @@
     // If NOT logged in, we want the modal. If LOGGED in, we want logout.
     // Logic handled in updateUI. If not logged in, original listener works.
 
-    loginBtn.addEventListener('click', () => {
+    // The initial listener is correctly handled in updateUI(null) normally, 
+    // but to tie the original load up correctly:
+    document.getElementById('loginBtn').addEventListener('click', () => {
       if (!currentUser) {
         authModal.style.display = 'flex';
       }
@@ -425,6 +452,7 @@
           alert(data.message);
           if (isLogin) {
             currentUser = data.user;
+            localStorage.setItem('user', JSON.stringify(currentUser));
             authModal.style.display = 'none';
             updateUI(currentUser);
           } else {

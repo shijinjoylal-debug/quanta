@@ -7,8 +7,43 @@ const thumbs = document.getElementById("thumbs");
 const dropZone = document.getElementById("dropZone");
 const postsContainer = document.getElementById("posts");
 
+let currentUser = null;
+
 // --- Initialization ---
-loadPosts();
+async function initAuth() {
+    const cachedUser = localStorage.getItem('user');
+    if (cachedUser) {
+        currentUser = JSON.parse(cachedUser);
+    }
+    
+    try {
+        const authUrl = (window.CONFIG ? window.CONFIG.API_BASE_URL : 'https://quanta-backend-raeq.onrender.com') + '/api/auth/me';
+        const res = await fetch(authUrl, { credentials: 'include' });
+        if (res.ok) {
+            currentUser = await res.json();
+            localStorage.setItem('user', JSON.stringify(currentUser));
+        } else {
+            currentUser = null;
+            localStorage.removeItem('user');
+        }
+    } catch (e) {
+        console.error('Auth error in community', e);
+    }
+
+    const postForm = document.getElementById("postForm");
+    if (!currentUser) {
+        postForm.style.display = "none";
+        const msg = document.createElement("div");
+        msg.innerHTML = `<p style="text-align:center; padding: 20px; background: rgba(255,255,255,0.1); border-radius: 8px;">Please <a href="../index.html" style="color:var(--glow);">login on the home page</a> to create a post.</p>`;
+        postForm.parentNode.insertBefore(msg, postForm);
+    } else {
+        postForm.style.display = "block";
+    }
+
+    loadPosts();
+}
+
+initAuth();
 
 // --- Event Listeners ---
 dropZone.onclick = (e) => {
@@ -49,7 +84,8 @@ document.getElementById("postForm").onsubmit = async (e) => {
 
         const res = await fetch(API_URL, {
             method: "POST",
-            body: fd
+            body: fd,
+            credentials: 'include' // Important for sessions
         });
 
         if (!res.ok) throw new Error("Failed to create post");
@@ -127,11 +163,12 @@ function addPostToFeed(post, prepend = false) {
     }
 
     div.innerHTML = `
+    <div style="font-weight:bold; margin-bottom:5px; color:#1abc9c;">${escapeHtml(post.authorName || 'Anonymous')}</div>
     <p>${escapeHtml(post.text)}</p>
     ${imagesHtml}
     <div class="meta">
         <span>${date}</span>
-        <button class="delete-btn" data-id="${post._id}">Delete</button>
+        ${(currentUser && currentUser.id === post.author) ? `<button class="delete-btn" data-id="${post._id}">Delete</button>` : ''}
     </div>
   `;
 
@@ -140,7 +177,10 @@ function addPostToFeed(post, prepend = false) {
         img.onclick = () => openLightbox(img.src);
     });
 
-    div.querySelector('.delete-btn').onclick = () => deletePost(post._id, div);
+    const deleteBtn = div.querySelector('.delete-btn');
+    if (deleteBtn) {
+        deleteBtn.onclick = () => deletePost(post._id, div);
+    }
 
     if (prepend) {
         // Remove "No posts" message if it exists
@@ -155,7 +195,10 @@ async function deletePost(id, element) {
     if (!confirm("Are you sure you want to delete this post?")) return;
 
     try {
-        const res = await fetch(`${API_URL}/${id}`, { method: 'DELETE' });
+        const res = await fetch(`${API_URL}/${id}`, { 
+            method: 'DELETE',
+            credentials: 'include' // Important for sessions
+        });
         if (res.ok) {
             element.remove();
             if (postsContainer.children.length === 0) {
